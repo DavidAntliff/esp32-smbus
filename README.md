@@ -38,6 +38,7 @@ The code in this project is licensed under the MIT license - see LICENSE for det
  
 ## Acknowledgements
 
+ * "I2C" is a registered trademark of Phillips Corporation.
  * "SMBus" is a trademark of Intel Corporation.
 
 ## Roadmap
