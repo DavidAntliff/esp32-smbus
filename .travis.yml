@@ -30,10 +30,10 @@ script:
 # Deploy using Travis-CI/GitHub Pages integration support
 deploy:
   provider: pages
-  skip_cleanup: true
-  local_dir: doc/html
+  skip-cleanup: true
+  local-dir: html
   github_token: $GITHUB_TOKEN
   on:
     branch: master
-  target_branch: gh-pages
+  target-branch: gh-pages
 
