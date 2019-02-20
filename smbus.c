@@ -113,11 +113,6 @@ esp_err_t _write_bytes(const smbus_info_t * smbus_info, uint8_t command, uint8_t
     esp_err_t err = ESP_FAIL;
     if (_is_init(smbus_info) && data)
     {
-        if (len > MAX_BLOCK_LEN)
-        {
-            ESP_LOGW(TAG, "data length exceeds %d bytes", MAX_BLOCK_LEN);
-            len = MAX_BLOCK_LEN;
-        }
         i2c_cmd_handle_t cmd = i2c_cmd_link_create();
         i2c_master_start(cmd);
         i2c_master_write_byte(cmd, smbus_info->address << 1 | WRITE_BIT, ACK_CHECK);
@@ -139,11 +134,6 @@ esp_err_t _read_bytes(const smbus_info_t * smbus_info, uint8_t command, uint8_t 
     esp_err_t err = ESP_FAIL;
     if (_is_init(smbus_info) && data)
     {
-        if (len > MAX_BLOCK_LEN)
-        {
-            ESP_LOGW(TAG, "data length exceeds %d bytes", MAX_BLOCK_LEN);
-            len = MAX_BLOCK_LEN;
-        }
         i2c_cmd_handle_t cmd = i2c_cmd_link_create();
         i2c_master_start(cmd);
         i2c_master_write_byte(cmd, smbus_info->address << 1 | WRITE_BIT, ACK_CHECK);
@@ -317,11 +307,6 @@ esp_err_t smbus_write_block(const smbus_info_t * smbus_info, uint8_t command, ui
     esp_err_t err = ESP_FAIL;
     if (_is_init(smbus_info) && data)
     {
-        if (len > MAX_BLOCK_LEN)
-        {
-            ESP_LOGW(TAG, "data length exceeds %d bytes", MAX_BLOCK_LEN);
-            len = MAX_BLOCK_LEN;
-        }
         i2c_cmd_handle_t cmd = i2c_cmd_link_create();
         i2c_master_start(cmd);
         i2c_master_write_byte(cmd, smbus_info->address << 1 | WRITE_BIT, ACK_CHECK);
@@ -342,7 +327,8 @@ esp_err_t smbus_read_block(const smbus_info_t * smbus_info, uint8_t command, uin
 {
     // Protocol: [S | ADDR | Wr | As | COMMAND | As | Sr | ADDR | Rd | As | LENs | A | DATA-1 | A | DATA-2 | A ... | DATA-LEN | N | P]
     esp_err_t err = ESP_FAIL;
-    if (_is_init(smbus_info) && data && len && *len <= MAX_BLOCK_LEN)
+    
+    if (_is_init(smbus_info) && data && len)
     {
         i2c_cmd_handle_t cmd = i2c_cmd_link_create();
         i2c_master_start(cmd);
