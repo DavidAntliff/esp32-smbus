@@ -40,8 +40,7 @@
 extern "C" {
 #endif
 
-#define DEFAULT_TIMEOUT (1000 / portTICK_RATE_MS)
-
+#define SMBUS_DEFAULT_TIMEOUT (1000 / portTICK_RATE_MS)  ///< Default transaction timeout in ticks
 /**
  * @brief 7-bit or 10-bit I2C slave address.
  */
@@ -178,28 +177,30 @@ esp_err_t smbus_write_block(const smbus_info_t * smbus_info, uint8_t command, ui
 esp_err_t smbus_read_block(const smbus_info_t * smbus_info, uint8_t command, uint8_t * data, uint8_t * len);
 
 /**
- * @brief Write up to 255 bytes to a slave device with a command code.
+ * @brief Write bytes to a slave device with a command code.
  *        No byte count is used - the transaction lasts as long as the master requires.
  *        The first byte in the data array is transmitted first.
+ *        This operation is not defined by the SMBus specification.
  * @param[in] smbus_info Pointer to initialised SMBus info instance.
  * @param[in] command Device-specific command byte.
  * @param[in] data Data bytes to send to slave.
  * @param[in] len Number of bytes to send to slave.
  * @return ESP_OK if successful, ESP_FAIL or ESP_ERR_* if an error occurred.
  */
-esp_err_t smbus_i2c_write_block(const smbus_info_t * smbus_info, uint8_t command, uint8_t * data, uint8_t len);
+esp_err_t smbus_i2c_write_block(const smbus_info_t * smbus_info, uint8_t command, uint8_t * data, size_t len);
 
 /**
- * @brief Read up to 255 bytes from a slave device with a command code (combined format).
+ * @brief Read bytes from a slave device with a command code (combined format).
  *        No byte count is used - the transaction lasts as long as the master requires.
  *        The first byte received is placed in the first array location.
+ *        This operation is not defined by the SMBus specification.
  * @param[in] smbus_info Pointer to initialised SMBus info instance.
  * @param[in] command Device-specific command byte.
  * @param[out] data Data bytes received from slave.
  * @param[in/out] len Size of data array. If the slave fails to provide sufficient bytes, ESP_ERR_TIMEOUT will be returned.
  * @return ESP_OK if successful, ESP_FAIL or ESP_ERR_* if an error occurred.
  */
-esp_err_t smbus_i2c_read_block(const smbus_info_t * smbus_info, uint8_t command, uint8_t * data, uint8_t len);
+esp_err_t smbus_i2c_read_block(const smbus_info_t * smbus_info, uint8_t command, uint8_t * data, size_t len);
 
 #ifdef __cplusplus
 }
