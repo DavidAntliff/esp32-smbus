@@ -40,7 +40,7 @@
 extern "C" {
 #endif
 
-#define SMBUS_DEFAULT_TIMEOUT (1000 / portTICK_RATE_MS)  ///< Default transaction timeout in ticks
+#define SMBUS_DEFAULT_TIMEOUT (1000 / portTICK_PERIOD_MS)  ///< Default transaction timeout in ticks
 /**
  * @brief 7-bit or 10-bit I2C slave address.
  */
